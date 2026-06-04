@@ -70,3 +70,8 @@ android/app/release/
 .env
 .env.local
 *.local
+
+# ---------- Node（本项目为 Swift/Kotlin，不应有 Node 产物，防止工具误生成入库）----------
+node_modules/
+package.json
+package-lock.json
