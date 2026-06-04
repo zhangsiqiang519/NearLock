@@ -98,3 +98,34 @@ Code review 发现并修复 P0-1：Android 广播用 16B deviceId 致 ServiceDat
 ### Next Steps
 
 - None - task complete
+
+
+## Session 4: 修复立即锁屏失效 + 安卓权限引导与开机自启
+
+**Date**: 2026-06-04
+**Task**: 修复立即锁屏失效 + 安卓权限引导与开机自启
+**Branch**: `main`
+
+### Summary
+
+锁屏修复:实测用户机 screenLock delay=300s 致纯息屏锁不住，ScreenLocker 改为 osascript 发 Ctrl+Cmd+Q 真正锁屏(lock()统一入口，失败降级 pmset 息屏)，自动+手动两处调用切换。安卓:新增 BeaconPreferences(autoStart/wasAdvertising)、BootReceiver 监听 BOOT_COMPLETED 按开关恢复广播、权限拒绝时 BeaconScreen 引导跳设置、开机自启开关 UI。双端构建通过(macOS BUILD SUCCEEDED / Android BUILD SUCCESSFUL 16MB APK)。Review:开机自启受国产 ROM 自启策略限制(已 UI 提示)；osascript 锁屏首次需辅助功能授权。
+
+### Main Changes
+
+(Add details)
+
+### Git Commits
+
+(No commits - planning session)
+
+### Testing
+
+- [OK] (Add test results)
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- None - task complete

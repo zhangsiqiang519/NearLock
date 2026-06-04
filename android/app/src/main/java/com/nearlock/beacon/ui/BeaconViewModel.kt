@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.nearlock.beacon.ble.AdvertiseController
 import com.nearlock.beacon.ble.AdvertiseState
 import com.nearlock.beacon.ble.NearLockProtocol
+import com.nearlock.beacon.data.BeaconPreferences
 import com.nearlock.beacon.data.DeviceIdStore
 import com.nearlock.beacon.service.AdvertiseService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ import kotlinx.coroutines.launch
 class BeaconViewModel(application: Application) : AndroidViewModel(application) {
 
     private val deviceIdStore = DeviceIdStore(application)
+    private val preferences = BeaconPreferences(application)
 
     /** 广播状态，直接复用服务更新的共享状态。 */
     val advertiseState: StateFlow<AdvertiseState> = AdvertiseController.state
@@ -30,6 +32,10 @@ class BeaconViewModel(application: Application) : AndroidViewModel(application) 
 
     /** 本机 deviceId 的短 ID 展示（与 macOS 端绑定列表显示一致的 16 位 hex）。 */
     val deviceId: StateFlow<String?> = _deviceId.asStateFlow()
+
+    /** 开机自启开关状态。 */
+    val autoStartEnabled: StateFlow<Boolean> = preferences.autoStartEnabled
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     init {
         viewModelScope.launch {
@@ -46,5 +52,10 @@ class BeaconViewModel(application: Application) : AndroidViewModel(application) 
     /** 停止广播（停止前台服务）。 */
     fun stopAdvertising() {
         AdvertiseService.stop(getApplication())
+    }
+
+    /** 设置开机自启开关。 */
+    fun setAutoStart(enabled: Boolean) {
+        viewModelScope.launch { preferences.setAutoStart(enabled) }
     }
 }

@@ -103,7 +103,7 @@ final class ProximityMonitor: ObservableObject {
 
     private func triggerLock() {
         lastLockTime = Date()
-        let result = ScreenLocker.lockNow()
+        let result = ScreenLocker.lock()
         switch result {
         case .success:
             eventLog.log("检测到离开，已自动息屏锁屏")

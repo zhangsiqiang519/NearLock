@@ -14,6 +14,7 @@ import com.nearlock.beacon.R
 import com.nearlock.beacon.ble.AdvertiseController
 import com.nearlock.beacon.ble.AdvertiseState
 import com.nearlock.beacon.ble.BleAdvertiser
+import com.nearlock.beacon.data.BeaconPreferences
 import com.nearlock.beacon.data.DeviceIdStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,11 +34,14 @@ class AdvertiseService : Service() {
 
     private val advertiser by lazy { BleAdvertiser(applicationContext) }
     private val deviceIdStore by lazy { DeviceIdStore(applicationContext) }
+    private val preferences by lazy { BeaconPreferences(applicationContext) }
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_STOP -> {
+                // 用户主动停止：清除广播标记，开机后不再自动恢复
+                scope.launch { preferences.setWasAdvertising(false) }
                 stopAdvertisingAndSelf()
                 return START_NOT_STICKY
             }
@@ -54,6 +58,10 @@ class AdvertiseService : Service() {
             val deviceId = deviceIdStore.getOrCreateDeviceId()
             advertiser.start(deviceId) { state ->
                 AdvertiseController.update(state)
+                // 广播成功，记录运行状态供开机自启判断
+                if (state is AdvertiseState.Advertising) {
+                    scope.launch { preferences.setWasAdvertising(true) }
+                }
                 // 广播失败时退出前台服务，避免无意义占用通知栏
                 if (state is AdvertiseState.Error ||
                     state is AdvertiseState.Unsupported ||

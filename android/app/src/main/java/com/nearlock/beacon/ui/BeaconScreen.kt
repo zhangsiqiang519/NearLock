@@ -2,6 +2,7 @@ package com.nearlock.beacon.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -36,8 +38,11 @@ import com.nearlock.beacon.ble.AdvertiseState
 fun BeaconScreen(
     state: AdvertiseState,
     deviceId: String?,
+    autoStartEnabled: Boolean,
     onStart: () -> Unit,
-    onStop: () -> Unit
+    onStop: () -> Unit,
+    onAutoStartChange: (Boolean) -> Unit,
+    onOpenSettings: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -66,23 +71,71 @@ fun BeaconScreen(
 
         DeviceIdCard(deviceId)
 
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(24.dp))
 
         val isAdvertising = state is AdvertiseState.Advertising
-        if (isAdvertising) {
-            OutlinedButton(
-                onClick = onStop,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("停止广播")
+        when {
+            // 权限缺失：引导用户去系统设置授权
+            state is AdvertiseState.PermissionDenied -> {
+                Button(
+                    onClick = onOpenSettings,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("去设置授予蓝牙权限")
+                }
             }
-        } else {
-            Button(
-                onClick = onStart,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("开启广播")
+            isAdvertising -> {
+                OutlinedButton(
+                    onClick = onStop,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("停止广播")
+                }
             }
+            else -> {
+                Button(
+                    onClick = onStart,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("开启广播")
+                }
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
+
+        AutoStartRow(enabled = autoStartEnabled, onChange = onAutoStartChange)
+    }
+}
+
+/**
+ * 开机自启开关行。
+ */
+@Composable
+private fun AutoStartRow(enabled: Boolean, onChange: (Boolean) -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text(
+                    text = "开机自启",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = "重启后自动恢复广播（部分机型需在系统设置允许自启动）",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Switch(checked = enabled, onCheckedChange = onChange)
         }
     }
 }

@@ -1,8 +1,11 @@
 package com.nearlock.beacon.ui
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,11 +43,15 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val state by viewModel.advertiseState.collectAsState()
                     val deviceId by viewModel.deviceId.collectAsState()
+                    val autoStart by viewModel.autoStartEnabled.collectAsState()
                     BeaconScreen(
                         state = state,
                         deviceId = deviceId,
+                        autoStartEnabled = autoStart,
                         onStart = viewModel::startAdvertising,
-                        onStop = viewModel::stopAdvertising
+                        onStop = viewModel::stopAdvertising,
+                        onAutoStartChange = viewModel::setAutoStart,
+                        onOpenSettings = ::openAppSettings
                     )
                 }
             }
@@ -63,5 +70,13 @@ class MainActivity : ComponentActivity() {
         if (permissions.isNotEmpty()) {
             permissionLauncher.launch(permissions.toTypedArray())
         }
+    }
+
+    /** 跳转到本应用的系统设置详情页，便于用户手动授予权限。 */
+    private fun openAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", packageName, null)
+        }
+        startActivity(intent)
     }
 }

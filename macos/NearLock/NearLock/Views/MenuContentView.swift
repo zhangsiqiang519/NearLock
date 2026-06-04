@@ -90,7 +90,7 @@ struct MenuContentView: View {
             .toggleStyle(.switch)
 
             Button {
-                let result = ScreenLocker.lockNow()
+                let result = ScreenLocker.lock()
                 switch result {
                 case .success:
                     eventLog.log("手动立即锁屏")
