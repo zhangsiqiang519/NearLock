@@ -41,8 +41,11 @@ struct NearLockApp: App {
         .menuBarExtraStyle(.window)
     }
 
-    /// 菜单栏图标随状态变化：绑定且保护中用实心锁，否则用空心锁。
+    /// 菜单栏图标随状态变化。优先级：保护关闭 > 暂停 > 已绑定 > 未绑定。
     private var menuBarIcon: String {
+        if !settings.protectionEnabled {
+            return "lock.slash"
+        }
         if settings.isPaused {
             return "lock.open"
         }

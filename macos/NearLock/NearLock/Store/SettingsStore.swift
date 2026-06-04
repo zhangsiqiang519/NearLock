@@ -15,6 +15,13 @@ final class SettingsStore: ObservableObject {
         static let triggerSeconds = "triggerSeconds"
         static let boundDeviceId = "boundDeviceId"
         static let pauseUntil = "pauseUntil"
+        static let protectionEnabled = "protectionEnabled"
+    }
+
+    /// 保护总开关：是否启用自动锁屏。默认 true。
+    /// 与 pauseUntil 互补——总开关是无限期的手动状态，暂停是限时的。
+    @Published var protectionEnabled: Bool {
+        didSet { defaults.set(protectionEnabled, forKey: Keys.protectionEnabled) }
     }
 
     /// RSSI 阈值（dBm），低于此值视为远离。默认 -85。
@@ -52,6 +59,13 @@ final class SettingsStore: ObservableObject {
         self.triggerSeconds = storedTrigger ?? 15
 
         self.boundDeviceId = defaults.string(forKey: Keys.boundDeviceId)
+
+        // 缺省 true：旧版本无此键时默认启用保护，向后兼容
+        if defaults.object(forKey: Keys.protectionEnabled) != nil {
+            self.protectionEnabled = defaults.bool(forKey: Keys.protectionEnabled)
+        } else {
+            self.protectionEnabled = true
+        }
 
         if let ts = defaults.object(forKey: Keys.pauseUntil) as? Double {
             let date = Date(timeIntervalSince1970: ts)

@@ -67,3 +67,34 @@ Code review 发现并修复 P0-1：Android 广播用 16B deviceId 致 ServiceDat
 ### Next Steps
 
 - None - task complete
+
+
+## Session 3: macOS 新增保护总开关与手动立即锁屏
+
+**Date**: 2026-06-04
+**Task**: macOS 新增保护总开关与手动立即锁屏
+**Branch**: `main`
+
+### Summary
+
+应用户'锁屏和不锁屏'需求。SettingsStore 加 protectionEnabled(默认true,UserDefaults持久化,向后兼容)；ProximityMonitor 增加保护开关短路闸(与 isPaused 并列)；MenuContentView 顶部加保护开关 Toggle + 立即锁屏按钮(直调 ScreenLocker 不受冷却限制)；statusText 与菜单栏图标加保护关闭分支(lock.slash,优先级最高)。macOS BUILD SUCCEEDED,已重启运行 PID 8960。README 同步。
+
+### Main Changes
+
+(Add details)
+
+### Git Commits
+
+(No commits - planning session)
+
+### Testing
+
+- [OK] (Add test results)
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- None - task complete

@@ -85,6 +85,9 @@ final class ProximityMonitor: ObservableObject {
         smoothedRSSI = evaluator.smoothedRSSI
         belowSeconds = Int(evaluator.belowDuration(now: now))
 
+        // 保护总开关关闭时不触发（无限期手动停用，与定时暂停并列的另一道闸）
+        if !settings.protectionEnabled { return }
+
         // 暂停保护期内不触发
         if settings.isPaused { return }
 

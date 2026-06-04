@@ -14,6 +14,10 @@ struct MenuContentView: View {
 
             Divider()
 
+            controlSection
+
+            Divider()
+
             if !scanner.isReady {
                 bluetoothOffNotice
             } else if let boundId = settings.boundDeviceId {
@@ -65,7 +69,47 @@ struct MenuContentView: View {
         }
     }
 
+    /// 保护总开关 + 立即锁屏按钮。最常用的两个手动控制，置于顶部。
+    private var controlSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Toggle(isOn: Binding(
+                get: { settings.protectionEnabled },
+                set: { newValue in
+                    settings.protectionEnabled = newValue
+                    eventLog.log(newValue ? "已启用自动锁屏保护" : "已关闭自动锁屏保护")
+                }
+            )) {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("自动锁屏保护")
+                        .font(.subheadline.bold())
+                    Text(settings.protectionEnabled ? "离开时自动锁屏" : "已关闭，不会自动锁屏")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .toggleStyle(.switch)
+
+            Button {
+                let result = ScreenLocker.lockNow()
+                switch result {
+                case .success:
+                    eventLog.log("手动立即锁屏")
+                case .failure(let reason):
+                    eventLog.log("手动锁屏失败：\(reason)")
+                }
+            } label: {
+                Label("立即锁屏", systemImage: "lock.fill")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+        }
+    }
+
     private var statusText: String {
+        if !settings.protectionEnabled {
+            return "保护已关闭"
+        }
         if settings.isPaused {
             return "已暂停保护"
         }
