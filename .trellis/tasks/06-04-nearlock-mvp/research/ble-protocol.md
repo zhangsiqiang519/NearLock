@@ -3,9 +3,10 @@
 ## 决策摘要
 
 - 固定 Service UUID：`A1B2C3D4-0000-1000-8000-00805F9B34FB`，双端硬编码常量。
-- deviceId 放在广播包 **Service Data** 字段，16 字节（UUID 去横线字节数组）。
+- deviceId 放在广播包 **Service Data** 字段，**8 字节短 ID**（取 UUID 高 64 位）。
 - macOS 仅被动扫描（scan-only），不建立 GATT 连接。
 - 扫描开 `allowDuplicates`，持续刷新 RSSI。
+- 双端统一用 **16 位小写 hex** 字符串表示短 ID，用于展示与绑定比对。
 
 ## 为什么用 Service Data 携带 deviceId
 
@@ -18,12 +19,18 @@ Android `BluetoothLeAdvertiser` 的广播包（31 字节 legacy）空间有限�
 | Manufacturer Data | 2B 厂商 ID + payload | 需要厂商 ID，对自用工具无意义，且与系统约定冲突风险 |
 | Device Name | 受限 | 占空间大，部分系统不在广播中带 name |
 
-deviceId 用 16 字节（一个 UUID）即可全局唯一，放 Service Data 刚好。
-广播包预算：flags(3) + 16B service UUID(2+16=18) + service data(2+2+16=20) 会超 31 字节，
-因此实际把 **完整 128-bit UUID 仅用于 ServiceData 的 key**，并依赖 ServiceUuids 做过滤时
-需注意预算。MVP 采用：`AdvertiseData` 只放 `addServiceData(ParcelUuid, 16B)` +
-`setIncludeDeviceName(false)`，扫描端用 ServiceData 的 key UUID 做匹配，省去单独的
-ServiceUuids 条目以控制在 31 字节内。若仍超限，将 deviceId 截断为 8 字节短 ID。
+deviceId 用 8 字节短 ID（UUID 高 64 位）。广播包 31 字节预算核算：
+- flags：3 字节
+- Service Data：`长度1 + 类型1 + 128bit UUID 16 + payload 8` = 26 字节
+- 合计 29 字节 ≤ 31，可放入。
+
+**为何不用完整 16 字节 UUID**：若 payload 用 16 字节，Service Data 达 `2+16+16=34`，
+单项即超 31 字节预算，`startAdvertising` 会以 `ADVERTISE_FAILED_DATA_TOO_LARGE` 失败。
+8 字节（64 bit）随机空间对"单用户绑定一台手机"场景碰撞概率可忽略。
+
+实现采用：`AdvertiseData` 只放 `addServiceData(ParcelUuid, 8B)` +
+`setIncludeDeviceName(false)` + `setIncludeTxPowerLevel(false)`，扫描端用 ServiceData
+的 key UUID 做匹配。
 
 ## macOS 扫描要点
 
@@ -44,9 +51,11 @@ centralManager.scanForPeripherals(
 
 ## deviceId 编解码
 
-- Android：`UUID.randomUUID()` → 16 字节大端 `ByteBuffer.putLong(msb).putLong(lsb)`。
-- macOS：`Data` 16 字节 → 还原 UUID 字符串用于显示与绑定比对。
-- 绑定：macOS 持久化绑定的 deviceId 字符串；扫描回调里 `deviceId == boundId` 才更新 RSSI。
+- Android：`UUID.randomUUID()` 取高 64 位 → `ByteBuffer.putLong(msb)` 得 8 字节大端。
+- Android：`shortIdHex()` 将 8 字节转 16 位小写 hex 字符串用于展示。
+- macOS：`Data` 8 字节 → 逐字节 `%02x` 拼成同样的 16 位小写 hex。
+- 绑定：macOS 持久化绑定的短 ID hex 字符串；扫描回调里 `shortIdHex == boundId` 才更新 RSSI。
+- 双端对同一 8 字节得到完全相同的 hex（已用脚本验证），是绑定识别的基础。
 
 ## 边界与失败处理
 

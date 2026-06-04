@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NearLock Beacon</string>
+    <string name="notification_channel_name">NearLock 广播服务</string>
+    <string name="notification_channel_desc">保持 BLE 信标广播运行的常驻通知</string>
+    <string name="notification_title">NearLock 正在广播</string>
+    <string name="notification_text">你的 Mac 可以发现这台手机并在你离开时自动锁屏</string>
+</resources>

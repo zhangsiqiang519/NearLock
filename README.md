@@ -49,14 +49,28 @@ Android 手机作为蓝牙信标（Beacon）持续广播，macOS 端扫描该信
 
 ```
 NearLock/
-├── macos/              # macOS 菜单栏 App（Swift / SwiftUI）
-├── android/            # Android Beacon App（Kotlin / Compose）
-├── shared/             # 双端共享约定（固定 Service UUID 等）
-├── docs/               # 项目文档
-├── .trellis/           # Trellis 工作流与编码规范
-├── CONTRIBUTING.md     # 开发规则（提交规范、语言规范）
+├── macos/NearLock/                  # macOS 菜单栏 App（Swift / SwiftUI）
+│   └── NearLock/
+│       ├── NearLockApp.swift        # 入口，MenuBarExtra 组装依赖
+│       ├── Bluetooth/               # 协议常量、CBCentralManager 扫描器
+│       ├── Lock/                    # 息屏执行、接近度状态机与监控器
+│       ├── Models/                  # 设备模型、事件日志
+│       ├── Store/                   # UserDefaults 设置
+│       └── Views/                   # 菜单栏内容视图
+├── android/                         # Android Beacon App（Kotlin / Compose）
+│   └── app/src/main/java/com/nearlock/beacon/
+│       ├── ble/                     # 协议常量、deviceId 编码、广播控制器
+│       ├── data/                    # DataStore 持久化 deviceId
+│       ├── service/                 # 前台广播服务
+│       └── ui/                      # MainActivity + Compose 界面 + ViewModel
+├── .trellis/                        # Trellis 工作流、规范与任务（含 PRD、技术决策）
+├── CONTRIBUTING.md                  # 开发规则（提交规范、语言规范）
 └── README.md
 ```
+
+固定 Service UUID 等双端共享约定分别硬编码在两端的 `NearLockProtocol`
+（`android/.../ble/NearLockProtocol.kt` 与 `macos/.../Bluetooth/NearLockProtocol.swift`），
+两端必须保持一致。
 
 ## MVP 功能
 
@@ -83,6 +97,49 @@ NearLock/
 6. 显示当前广播状态
 7. 支持停止广播
 
+## 构建与运行
+
+### Android
+
+需要 Android Studio（或命令行 JDK 17 + Android SDK）。
+
+```bash
+cd android
+./gradlew assembleDebug    # 产出 app/build/outputs/apk/debug/app-debug.apk
+```
+
+安装后：授予蓝牙权限 → 点击「开启广播」→ 前台通知常驻表示广播中。
+
+> BLE 广播需真机，模拟器不支持；设备需支持外围广播
+> （`isMultipleAdvertisementSupported == true`）。
+
+### macOS
+
+需要 Xcode 15+（已在 Xcode 26.5 验证 `xcodebuild` 构建通过）。
+
+```bash
+cd macos/NearLock
+xcodebuild -scheme NearLock -configuration Debug build
+# 或用 Xcode 打开 NearLock.xcodeproj 直接运行
+```
+
+运行后菜单栏出现锁形图标，首次运行请求蓝牙权限。
+
+> **要达到真正锁屏效果**：在 **系统设置 → 锁定屏幕 → 屏幕关闭或睡眠后立即要求密码**
+> 选择「立即」。NearLock 执行的是息屏（`pmset displaysleepnow`），由该系统设置决定是否同时锁定。
+> macOS 工程默认**未开启 App Sandbox**（本地自用工具），以允许调用 `/usr/bin/pmset`。
+
+## 联调步骤（需两台设备）
+
+1. Android 真机安装并开启广播。
+2. macOS 运行 NearLock，在「发现的设备」中看到该手机（deviceId 前 8 位 + RSSI）。
+3. 点击「绑定」，面板切换为显示绑定设备的实时 RSSI 与离开计时。
+4. 按需调整 RSSI 阈值与触发时间。
+5. 带手机走远：RSSI 持续低于阈值或信号丢失，计时到达后 Mac 自动息屏锁屏。
+
+> deviceId 显示差异：Android `UUID.toString()` 为小写，macOS 解码后显示大写，
+> 二者指向同一 ID；macOS 内部比对统一用大写，不影响绑定。
+
 ## 开发约定
 
 - 所有沟通、文档、代码注释、Git Commit Message 均使用**中文**。
@@ -92,7 +149,10 @@ NearLock/
 
 ## 开发路线
 
-- [ ] 搭建项目结构（当前）
-- [ ] Android BLE Beacon 广播
-- [ ] macOS 扫描与 RSSI 显示
-- [ ] macOS 自动锁屏逻辑
+- [x] 搭建项目结构
+- [x] Android BLE Beacon 广播
+- [x] macOS 扫描与 RSSI 显示
+- [x] macOS 自动锁屏逻辑
+
+MVP 全部功能已实现。详细需求、技术决策与验收标准见
+`.trellis/tasks/06-04-nearlock-mvp/`（PRD + research 决策文档）。

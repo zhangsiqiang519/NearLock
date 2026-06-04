@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 0
-- **Last Active**: -
+- **Total Sessions**: 2
+- **Last Active**: 2026-06-04
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~0 | Active |
+| `journal-1.md` | ~69 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,8 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 2 | 2026-06-04 | NearLock code review 修复：P0 广播包字节预算 + 双端 deviceId 短 ID 统一 | - | `main` |
+| 1 | 2026-06-04 | NearLock MVP 双端实现：Android BLE Beacon + macOS 扫描/RSSI/自动锁屏 | - | `main` |
 <!-- @@@/auto:session-history -->
 
 ---

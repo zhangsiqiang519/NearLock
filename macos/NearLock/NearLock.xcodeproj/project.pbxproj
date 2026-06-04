@@ -12,6 +12,7 @@
 		B0010003 /* BluetoothScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010003 /* BluetoothScanner.swift */; };
 		B0010004 /* ScreenLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010004 /* ScreenLocker.swift */; };
 		B0010005 /* ProximityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010005 /* ProximityMonitor.swift */; };
+		B0010011 /* ProximityEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010013 /* ProximityEvaluator.swift */; };
 		B0010006 /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010006 /* DiscoveredDevice.swift */; };
 		B0010007 /* EventLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010007 /* EventLog.swift */; };
 		B0010008 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010008 /* SettingsStore.swift */; };
@@ -26,6 +27,7 @@
 		A0010003 /* BluetoothScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanner.swift; sourceTree = "<group>"; };
 		A0010004 /* ScreenLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLocker.swift; sourceTree = "<group>"; };
 		A0010005 /* ProximityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityMonitor.swift; sourceTree = "<group>"; };
+		A0010013 /* ProximityEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityEvaluator.swift; sourceTree = "<group>"; };
 		A0010006 /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
 		A0010007 /* EventLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLog.swift; sourceTree = "<group>"; };
 		A0010008 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				A0010004 /* ScreenLocker.swift */,
 				A0010005 /* ProximityMonitor.swift */,
+				A0010013 /* ProximityEvaluator.swift */,
 			);
 			path = Lock;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				B0010003 /* BluetoothScanner.swift in Sources */,
 				B0010004 /* ScreenLocker.swift in Sources */,
 				B0010005 /* ProximityMonitor.swift in Sources */,
+				B0010011 /* ProximityEvaluator.swift in Sources */,
 				B0010006 /* DiscoveredDevice.swift in Sources */,
 				B0010007 /* EventLog.swift in Sources */,
 				B0010008 /* SettingsStore.swift in Sources */,
@@ -203,4 +207,119 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F0010001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F0010002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		F0010003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NearLock/NearLock.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NearLock/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nearlock.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F0010004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NearLock/NearLock.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NearLock/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nearlock.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F0000001 /* Build configuration list for PBXProject "NearLock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0010001 /* Debug */,
+				F0010002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0000002 /* Build configuration list for PBXNativeTarget "NearLock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0010003 /* Debug */,
+				F0010004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E0000002 /* Project object */;
+}
 
