@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  MVP 不开启 App Sandbox（本地自用工具，非上架）。
+	  原因：需要用 Process 调用 /usr/bin/pmset 息屏，沙箱会限制外部进程执行。
+	  若将来上架需开启沙箱，则需改用 IOKit 息屏方案并加蓝牙 entitlement：
+	  <key>com.apple.security.app-sandbox</key> <true/>
+	  <key>com.apple.security.device.bluetooth</key> <true/>
+	-->
+	<key>com.apple.security.app-sandbox</key>
+	<false/>
+</dict>
+</plist>

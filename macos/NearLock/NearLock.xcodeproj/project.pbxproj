@@ -1,0 +1,206 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B0010001 /* NearLockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010001 /* NearLockApp.swift */; };
+		B0010002 /* NearLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010002 /* NearLockProtocol.swift */; };
+		B0010003 /* BluetoothScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010003 /* BluetoothScanner.swift */; };
+		B0010004 /* ScreenLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010004 /* ScreenLocker.swift */; };
+		B0010005 /* ProximityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010005 /* ProximityMonitor.swift */; };
+		B0010006 /* DiscoveredDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010006 /* DiscoveredDevice.swift */; };
+		B0010007 /* EventLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010007 /* EventLog.swift */; };
+		B0010008 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010008 /* SettingsStore.swift */; };
+		B0010009 /* MenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0010009 /* MenuContentView.swift */; };
+		B0010010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0010010 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A0000001 /* NearLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0010001 /* NearLockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearLockApp.swift; sourceTree = "<group>"; };
+		A0010002 /* NearLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearLockProtocol.swift; sourceTree = "<group>"; };
+		A0010003 /* BluetoothScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanner.swift; sourceTree = "<group>"; };
+		A0010004 /* ScreenLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLocker.swift; sourceTree = "<group>"; };
+		A0010005 /* ProximityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityMonitor.swift; sourceTree = "<group>"; };
+		A0010006 /* DiscoveredDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDevice.swift; sourceTree = "<group>"; };
+		A0010007 /* EventLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLog.swift; sourceTree = "<group>"; };
+		A0010008 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		A0010009 /* MenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentView.swift; sourceTree = "<group>"; };
+		A0010010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A0010011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0010012 /* NearLock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NearLock.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C0000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D0000001 = {
+			isa = PBXGroup;
+			children = (
+				D0000002 /* NearLock */,
+				D0000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D0000002 /* NearLock */ = {
+			isa = PBXGroup;
+			children = (
+				A0010001 /* NearLockApp.swift */,
+				D0000004 /* Bluetooth */,
+				D0000005 /* Lock */,
+				D0000006 /* Models */,
+				D0000007 /* Store */,
+				D0000008 /* Views */,
+				A0010010 /* Assets.xcassets */,
+				A0010011 /* Info.plist */,
+				A0010012 /* NearLock.entitlements */,
+			);
+			path = NearLock;
+			sourceTree = "<group>";
+		};
+		D0000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0000001 /* NearLock.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D0000004 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				A0010002 /* NearLockProtocol.swift */,
+				A0010003 /* BluetoothScanner.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		D0000005 /* Lock */ = {
+			isa = PBXGroup;
+			children = (
+				A0010004 /* ScreenLocker.swift */,
+				A0010005 /* ProximityMonitor.swift */,
+			);
+			path = Lock;
+			sourceTree = "<group>";
+		};
+		D0000006 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A0010006 /* DiscoveredDevice.swift */,
+				A0010007 /* EventLog.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D0000007 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				A0010008 /* SettingsStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		D0000008 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A0010009 /* MenuContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E0000001 /* NearLock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0000002 /* Build configuration list for PBXNativeTarget "NearLock" */;
+			buildPhases = (
+				C0000002 /* Sources */,
+				C0000001 /* Frameworks */,
+				C0000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NearLock;
+			productName = NearLock;
+			productReference = A0000001 /* NearLock.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E0000002 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					E0000001 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = F0000001 /* Build configuration list for PBXProject "NearLock" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D0000001;
+			productRefGroup = D0000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E0000001 /* NearLock */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C0000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0010010 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C0000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0010001 /* NearLockApp.swift in Sources */,
+				B0010002 /* NearLockProtocol.swift in Sources */,
+				B0010003 /* BluetoothScanner.swift in Sources */,
+				B0010004 /* ScreenLocker.swift in Sources */,
+				B0010005 /* ProximityMonitor.swift in Sources */,
+				B0010006 /* DiscoveredDevice.swift in Sources */,
+				B0010007 /* EventLog.swift in Sources */,
+				B0010008 /* SettingsStore.swift in Sources */,
+				B0010009 /* MenuContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+

@@ -1,0 +1,4 @@
+{"file": ".trellis/tasks/06-04-nearlock-mvp/prd.md", "reason": "需求、双端架构、MVP 范围与验收标准的唯一真相来源"}
+{"file": ".trellis/tasks/06-04-nearlock-mvp/research/ble-protocol.md", "reason": "双端 BLE 广播/扫描契约：固定 Service UUID、deviceId 编解码、scan-only 与 RSSI 取值方式"}
+{"file": ".trellis/tasks/06-04-nearlock-mvp/research/macos-lock-mechanism.md", "reason": "macOS 息屏锁屏选型与 pmset 实现细节、沙箱权限取舍"}
+{"file": ".trellis/tasks/06-04-nearlock-mvp/research/android-advertise-permissions.md", "reason": "Android 各版本广播权限矩阵、前台服务保活与 BluetoothLeAdvertiser 骨架"}

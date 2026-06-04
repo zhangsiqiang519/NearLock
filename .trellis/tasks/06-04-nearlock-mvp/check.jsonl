@@ -1,0 +1,4 @@
+{"file": ".trellis/tasks/06-04-nearlock-mvp/prd.md", "reason": "验收标准与 Definition of Done 的核对依据"}
+{"file": ".trellis/tasks/06-04-nearlock-mvp/research/ble-protocol.md", "reason": "核对双端 UUID/deviceId 编解码一致性、scan-only 约定是否被遵守"}
+{"file": ".trellis/tasks/06-04-nearlock-mvp/research/macos-lock-mechanism.md", "reason": "核对锁屏实现是否符合选型、沙箱设置是否影响 pmset 执行"}
+{"file": ".trellis/tasks/06-04-nearlock-mvp/research/android-advertise-permissions.md", "reason": "核对权限声明、前台服务类型与版本适配是否完整"}
