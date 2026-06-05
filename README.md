@@ -92,8 +92,6 @@ cd android
 
 - [Anthropic](https://www.anthropic.com) — Claude claude-opus-4-8 模型
 - [Unity2.ai](https://unity2.ai/home) — API 中转服务
-- [Apple CoreBluetooth](https://developer.apple.com/documentation/corebluetooth) — macOS BLE 扫描
-- [Android BluetoothLeAdvertiser](https://developer.android.com/reference/android/bluetooth/le/BluetoothLeAdvertiser) — Android BLE 广播
 
 ## License
 
