@@ -1,3 +1,0 @@
-{"file": ".trellis/tasks/06-04-lock-fix-autostart/prd.md", "reason": "锁屏修复方案、安卓权限引导与开机自启的需求与技术取舍"}
-{"file": ".trellis/tasks/06-04-nearlock-mvp/research/macos-lock-mechanism.md", "reason": "锁屏机制选型背景，本次从息屏升级为系统锁屏快捷键"}
-{"file": ".trellis/tasks/06-04-nearlock-mvp/research/android-advertise-permissions.md", "reason": "安卓权限矩阵与前台服务要求，权限引导与开机自启需对齐"}

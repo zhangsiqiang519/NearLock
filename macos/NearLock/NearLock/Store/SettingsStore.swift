@@ -53,7 +53,7 @@ final class SettingsStore: ObservableObject {
     init() {
         // 读取持久化值，缺省时用默认值
         let storedThreshold = defaults.object(forKey: Keys.rssiThreshold) as? Int
-        self.rssiThreshold = storedThreshold ?? -65  // ≈ 2 米
+        self.rssiThreshold = storedThreshold ?? -75  // ≈ 5 米
 
         let storedTrigger = defaults.object(forKey: Keys.triggerSeconds) as? Int
         self.triggerSeconds = storedTrigger ?? 15
