@@ -82,8 +82,7 @@ cd android
 
 ## 鸣谢
 
-- [Anthropic](https://www.anthropic.com) — Claude claude-opus-4-8 模型
-- [Unity2.ai](https://unity2.ai/home) — API 中转服务
+- [Unity2.ai](https://unity2.ai/home) — 提供 claude-opus-4-8 模型 API 中转服务
 
 ## License
 
