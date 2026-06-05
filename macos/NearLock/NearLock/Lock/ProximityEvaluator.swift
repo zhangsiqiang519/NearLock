@@ -14,7 +14,7 @@ struct ProximityEvaluator {
     /// 平滑 RSSI 持续低于阈值的起始时间（nil 表示当前不低于阈值）。
     private(set) var belowSince: Date?
 
-    init(windowSize: Int = 5) {
+    init(windowSize: Int = 3) {
         self.windowSize = max(1, windowSize)
     }
 
@@ -39,10 +39,10 @@ struct ProximityEvaluator {
     }
 
     /// 标记信号丢失（一段时间收不到广播），等同于"低于阈值"。
+    /// 保留旧样本，避免信号短暂回来后需重新积累才能恢复平滑值。
     ///
     /// - Parameter now: 当前时间
     mutating func markSignalLost(now: Date = Date()) {
-        samples.removeAll()
         if belowSince == nil {
             belowSince = now
         }

@@ -24,7 +24,8 @@ final class ProximityMonitor: ObservableObject {
     private var timer: Timer?
 
     /// 信号丢失判定阈值：超过此秒数未收到绑定设备广播视为离场。
-    private let signalLostThreshold: TimeInterval = 3.0
+    /// 8 秒：兼容 BLE 广播在遮挡/干扰时的收包间隔（实测可达 4-6s）。
+    private let signalLostThreshold: TimeInterval = 8.0
 
     /// 锁屏后的冷却时间，避免重复触发。
     private let cooldown: TimeInterval = 30.0
