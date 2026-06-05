@@ -27,7 +27,13 @@ struct NearLockApp: App {
     }
 
     var body: some Scene {
-        MenuBarExtra("NearLock", systemImage: menuBarIcon) {
+        // 在 body 内显式读取 settings / scanner，确保状态变化时 MenuBarExtra 重新渲染图标
+        let icon: String = {
+            if !settings.protectionEnabled { return "lock.slash" }
+            if settings.isPaused { return "lock.open" }
+            return settings.boundDeviceId != nil ? "lock.fill" : "lock"
+        }()
+        MenuBarExtra("NearLock", systemImage: icon) {
             MenuContentView()
                 .environmentObject(settings)
                 .environmentObject(scanner)
@@ -41,14 +47,4 @@ struct NearLockApp: App {
         .menuBarExtraStyle(.window)
     }
 
-    /// 菜单栏图标随状态变化。优先级：保护关闭 > 暂停 > 已绑定 > 未绑定。
-    private var menuBarIcon: String {
-        if !settings.protectionEnabled {
-            return "lock.slash"
-        }
-        if settings.isPaused {
-            return "lock.open"
-        }
-        return settings.boundDeviceId != nil ? "lock.fill" : "lock"
-    }
 }
