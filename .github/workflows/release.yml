@@ -8,12 +8,15 @@ on:
 jobs:
   build-macos:
     runs-on: macos-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
       - name: 构建 macOS App
         run: |
           xcodebuild \
+            -project macos/NearLock/NearLock.xcodeproj \
             -scheme NearLock \
             -destination 'platform=macOS' \
             -configuration Release \
@@ -37,6 +40,8 @@ jobs:
 
   build-android:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
