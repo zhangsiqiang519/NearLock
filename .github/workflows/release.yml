@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 构建 macOS App
+        run: |
+          xcodebuild \
+            -scheme NearLock \
+            -destination 'platform=macOS' \
+            -configuration Release \
+            -derivedDataPath /tmp/nearlock-build \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: 打包 DMG
+        run: |
+          hdiutil create NearLock-macOS.dmg \
+            -volname "NearLock" \
+            -srcfolder /tmp/nearlock-build/Build/Products/Release/NearLock.app \
+            -ov -format UDZO
+
+      - name: 上传 DMG 到 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: NearLock-macOS.dmg
+
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 构建 Android APK
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: 重命名 APK
+        run: |
+          mv android/app/build/outputs/apk/release/app-release-unsigned.apk \
+             NearLock-Android.apk
+
+      - name: 上传 APK 到 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: NearLock-Android.apk
