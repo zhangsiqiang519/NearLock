@@ -80,14 +80,6 @@ cd android
 - RSSI 距离估算受环境干扰影响，室内误差约 ±30%
 - macOS 执行的是息屏（`pmset displaysleepnow`），锁屏效果依赖系统密码设置
 
-## 开发约定
-
-代码注释、Commit Message 均使用中文，详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
-
-## 致谢
-
-本项目开发过程中使用 **claude-opus-4-8** 模型辅助编码，API 中转服务由 [Unity2.ai](https://unity2.ai/home) 提供，感谢其稳定的服务支持。
-
 ## 鸣谢
 
 - [Anthropic](https://www.anthropic.com) — Claude claude-opus-4-8 模型
